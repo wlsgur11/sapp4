@@ -1,4 +1,4 @@
-package com.ll.sapp4;
+package com.ll.sapp4.question;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
