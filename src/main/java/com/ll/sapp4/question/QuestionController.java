@@ -1,9 +1,6 @@
-package com.ll.sapp4;
+package com.ll.sapp4.question;
 
 import com.ll.sapp4.answer.AnswerForm;
-import com.ll.sapp4.question.Question;
-import com.ll.sapp4.question.QuestionForm;
-import com.ll.sapp4.question.QuestionService;
 import com.ll.sapp4.user.SiteUser;
 import com.ll.sapp4.user.UserService;
 import jakarta.validation.Valid;
@@ -98,6 +95,15 @@ public class QuestionController {
         }
         this.questionService.delete(question);
         return "redirect:/";
+    }
+
+    @PreAuthorize("isAuthenticated()")
+    @GetMapping("/vote/{id}")
+    public String questionVote(Principal principal, @PathVariable("id") Integer id) {
+        Question question = this.questionService.getQuestion(id);
+        SiteUser siteUser = this.userService.getUser(principal.getName());
+        this.questionService.vote(question, siteUser);
+        return String.format("redirect:/question/detail/%s", id);
     }
 
 
